@@ -62,6 +62,22 @@ Step 5: FetchReach       → 标准 benchmark，复现工业级环境
 
 ---
 
+## 训练效果
+
+### Step 3: SAC 倒立摆
+
+![Pendulum SAC](./src/assets/pendulum_sac.gif)
+
+### Step 4: 3-DOF 机械臂到达
+
+![Robot Arm Validation](./src/assets/robot_arm_validation.gif)
+
+训练曲线：
+
+![Step4 Training](./src/assets/step4_training_curves.png)
+
+---
+
 ## 快速开始
 
 ### 环境安装
