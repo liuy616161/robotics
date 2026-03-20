@@ -1,0 +1,68 @@
+# Hyperparameters Configuration
+
+# Step 1: Q-Learning
+q_learning:
+  alpha: 0.1           # Learning rate
+  gamma: 0.99          # Discount factor
+  epsilon: 1.0         # Initial exploration rate
+  epsilon_min: 0.01    # Minimum exploration rate
+  epsilon_decay: 0.995 # Exploration decay rate
+  n_episodes: 500      # Training episodes
+  max_steps: 500       # Max steps per episode
+  n_bins: [3, 3, 6, 6] # Discretization bins
+
+# Step 2: REINFORCE
+reinforce:
+  gamma: 0.99           # Discount factor
+  lr: 0.01             # Learning rate
+  hidden_dim: 16       # Hidden layer dimension
+  n_episodes: 1000     # Training episodes
+  max_steps: 500       # Max steps per episode
+
+# Step 3: SAC
+sac:
+  buffer_size: 50000    # Replay buffer size
+  learning_rate: 3e-4   # Adam learning rate
+  batch_size: 256      # Batch size
+  gamma: 0.99          # Discount factor
+  tau: 0.005           # Target network soft update
+  ent_coef: 'auto'     # Entropy coefficient
+  learning_starts: 1000 # Steps before training starts
+  total_timesteps: 100000 # Training steps
+
+# Step 4: Robot Arm Environment
+robot_arm:
+  # Arm parameters
+  arm_lengths: [0.4, 0.35, 0.25]  # Link lengths (m)
+  arm_z: 0.5                       # Arm height (m)
+
+  # Joint limits (rad)
+  joint_limit_low: [-3.1416, -1.5708, -1.5708]
+  joint_limit_high: [3.1416, 1.5708, 1.5708]
+
+  # Action
+  action_limit: 0.3      # Max joint angle change per step (rad)
+
+  # Task
+  max_episode_steps: 1000
+  goal_tolerance: 0.05   # Success distance threshold (m)
+  goal_radius_min: 0.3   # Min target distance (m)
+  goal_radius_max: 0.8   # Max target distance (m)
+
+  # Curriculum Learning
+  curriculum:
+    max_level: 10
+    steps_per_level: 50000  # Steps per difficulty level
+    initial_radius_min: 0.1  # Level 0 min distance
+    initial_radius_max: 0.2  # Level 0 max distance
+
+  # Reward weights
+  dist_weight: 1.0         # Distance penalty coefficient
+  action_weight: 0.01      # Action penalty coefficient
+  success_bonus: 200.0     # Success reward
+
+# Visualization
+visualization:
+  fps: 10                  # Render FPS
+  dpi: 100                 # Plot DPI
+  frame_skip: 5            # Frames to skip in GIF

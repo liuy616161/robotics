@@ -1,0 +1,16 @@
+# Core dependencies
+gymnasium>=0.29.0
+stable-baselines3>=2.0.0
+numpy>=1.21.0
+matplotlib>=3.5.0
+pillow>=9.0.0
+tqdm>=4.65.0
+pandas>=1.4.0
+
+# Robot learning dependencies
+pybullet>=3.0.0
+gymnasium-robotics>=1.0.0
+
+# Optional: for visualization enhancements
+# seaborn>=0.11.0
+# tabulate>=0.8.10
