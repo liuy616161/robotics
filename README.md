@@ -68,13 +68,19 @@ Step 5: FetchReach       → 标准 benchmark，复现工业级环境
 
 ![Pendulum SAC](./src/assets/pendulum_sac.gif)
 
-### Step 4: 3-DOF 机械臂到达
+### Step 5B: FetchReach 官方环境
 
-![Robot Arm Validation](./src/assets/robot_arm_validation.gif)
+训练效果（100K 步收敛）：
 
-训练曲线：
+![FetchReach Distance](./src/assets/fetch_reach_sac_official_fetch_100000_steps_distance.png)
 
-![Step4 Training](./src/assets/step4_training_curves.png)
+模型演示（300K 步）：
+
+![FetchReach Demo](./src/assets/fetch_reach_sac_official_fetch_300000_steps.gif)
+
+稀疏 vs 稠密奖励对比：
+
+![Comparison](./src/assets/step5b_official_comparison.png)
 
 ---
 
