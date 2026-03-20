@@ -64,7 +64,7 @@ JOINT_LIMIT_HIGH = np.array([ np.pi,    np.pi/2,   np.pi/2], dtype=np.float32)
 ACTION_LIMIT = 0.3   # ±0.1 rad/step，约 ±5.7 度
 
 # 任务参数
-MAX_EPISODE_STEPS = 1000    # 每轮最多走多少步
+MAX_EPISODE_STEPS = 50    # 每轮最多走多少步（与 FetchReach 对齐）
 GOAL_TOLERANCE    = 0.05   # 到达目标的距离阈值（0.05 m = 5 cm）
 
 # 目标点采样范围（在工作空间内随机采样）
@@ -725,8 +725,8 @@ class CurriculumCallback(BaseCallback):
         self.eval_env = eval_env  # 评估环境引用
         self.success_threshold = success_threshold
         self.current_level = 0
-        self.max_level = 10
-        self.steps_per_level = 200000  # 每级需要 200K 步，充分巩固（减缓课程节奏）
+        self.max_level = 5
+        self.steps_per_level = 20000  # 每级 20K 步，总计 100K 步
         self.success_history = []  # 记录历史成功率
 
     def _on_step(self) -> bool:
@@ -755,21 +755,20 @@ def train_robot_arm_with_curriculum():
     """
     使用课程学习训练机械臂
 
-    课程设置：
-    - Level 0 (0~10K 步): 目标距离 0.1~0.2m（非常简单）
-    - Level 1 (10K~20K): 目标距离 0.12~0.26m
-    - ...
-    - Level 10 (200K+): 目标距离 0.3~0.6m（完整任务）
+    课程设置（总计 100K 步）：
+    - Level 0 (0~20K 步): 目标距离 0.1~0.2m（非常简单）
+    - Level 3 (60K 步): 目标距离 0.2~0.4m（中等难度）
+    - Level 5 (100K 步): 目标距离 0.3~0.6m（完整任务）
     """
     os.makedirs("assets", exist_ok=True)
 
     print("=" * 60)
     print("课程学习训练模式")
     print("=" * 60)
-    print("课程设计：")
+    print("课程设计（总步数 100K）：")
     print("  Level  0:  目标距离 0.10 ~ 0.20 m (非常简单)")
-    print("  Level  5:  目标距离 0.20 ~ 0.40 m (中等难度)")
-    print("  Level 10:  目标距离 0.30 ~ 0.60 m (完整任务，限制最大难度)")
+    print("  Level  3:  目标距离 0.20 ~ 0.40 m (中等难度)")
+    print("  Level  5:  目标距离 0.30 ~ 0.60 m (完整任务)")
     print("=" * 60)
 
     # 验证环境接口
@@ -865,12 +864,12 @@ def train_robot_arm_with_curriculum():
     # 训练
     print("\n开始课程学习训练...")
     print("每 20000 步评估一次，每 200000 步增加课程难度")
-    print("总训练步数: 100万步\n")
+    print("总训练步数: 10万步\n")
 
     # 继续训练模式：reset_num_timesteps=False 让回调知道继续计数
     continue_training = model_exists
     model.learn(
-        total_timesteps=1_000_000,
+        total_timesteps=100_000,
         callback=callbacks,
         reset_num_timesteps=not continue_training,
         progress_bar=True
